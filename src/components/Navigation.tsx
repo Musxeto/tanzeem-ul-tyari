@@ -16,10 +16,10 @@ export default function Navigation() {
     <motion.nav 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="minecraft-border bg-black/90 backdrop-blur-md p-4 mb-6 sticky top-0 z-50"
+      className="minecraft-border bg-black/90 backdrop-blur-md p-2 sm:p-3 md:p-4 mb-4 md:mb-6 sticky top-0 z-50"
     >
-      <div className="container mx-auto">
-        <div className="flex flex-wrap gap-4 justify-center items-center">
+      <div className="container mx-auto px-2">
+        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center items-center">
           {navItems.map((item, idx) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.to;
@@ -46,11 +46,11 @@ export default function Navigation() {
         </div>
         
         <motion.div 
-          className="text-center mt-4"
+          className="text-center mt-2 md:mt-4"
           animate={{ opacity: [1, 0.7, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div className="text-mc-beige text-xs overflow-hidden">
+          <div className="text-mc-beige text-[8px] sm:text-[10px] md:text-xs overflow-hidden px-2">
             <motion.div
               animate={{ x: ['100%', '-100%'] }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}

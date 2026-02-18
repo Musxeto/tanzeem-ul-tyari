@@ -24,16 +24,16 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="minecraft-border bg-mc-darker p-6 mt-12 text-center glow"
+          className="minecraft-border bg-mc-darker p-4 sm:p-6 mt-8 md:mt-12 text-center glow"
         >
           <motion.p 
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 3, repeat: Infinity }}
-            className="text-mc-beige minecraft-text text-lg md:text-xl mb-2"
+            className="text-mc-beige minecraft-text text-sm sm:text-base md:text-lg lg:text-xl mb-2"
           >
             TANZEEM-UL-TYARE
           </motion.p>
-          <p className="text-mc-tan text-xs md:text-sm">United by Panic | Est. 5th Semester Finals</p>
+          <p className="text-mc-tan text-[10px] sm:text-xs md:text-sm">United by Panic | Est. 5th Semester Finals</p>
           <motion.p 
             animate={{ opacity: [1, 0.5, 1] }}
             transition={{ duration: 2, repeat: Infinity }}

@@ -74,12 +74,12 @@ export default function HomePage() {
       className="container mx-auto px-4 py-8"
     >
       {/* Hero Section with Logo */}
-      <motion.div variants={itemVariants} className="text-center mb-12 relative">
+      <motion.div variants={itemVariants} className="text-center mb-8 md:mb-12 relative px-2">
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
-          className="relative inline-block mb-6"
+          className="relative inline-block mb-4 md:mb-6"
         >
           <motion.div
             animate={{ 
@@ -91,7 +91,7 @@ export default function HomePage() {
             <img 
               src="/logo-light.png" 
               alt="Tanzeem-ul-TyarI Logo" 
-              className="w-64 h-64 mx-auto"
+              className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
@@ -124,19 +124,19 @@ export default function HomePage() {
 
         <motion.h1 
           variants={itemVariants}
-          className="minecraft-text text-4xl md:text-6xl mb-4 gradient-text"
+          className="minecraft-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-3 md:mb-4 gradient-text px-2 leading-tight"
         >
           TANZEEM-UL-TYARI
         </motion.h1>
         <motion.p 
           variants={itemVariants}
-          className="text-mc-tan text-xl md:text-2xl mb-2"
+          className="text-mc-tan text-base sm:text-lg md:text-xl lg:text-2xl mb-2"
         >
           🎓 FINAL EXAMS 🎓
         </motion.p>
         <motion.p 
           variants={itemVariants}
-          className="text-mc-beige text-lg italic"
+          className="text-mc-beige text-sm sm:text-base md:text-lg italic px-4"
         >
           "United by Panic"
         </motion.p>
@@ -155,14 +155,14 @@ export default function HomePage() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <h2 className="islamic-text text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-6 text-center text-gold flex items-center justify-center gap-2 md:gap-3">
-              <Moon className="animate-pulse" size={24} />
-              RAMADAN 2026
-              <Moon className="animate-pulse" size={24} />
+            <h2 className="islamic-text text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-6 text-center text-gold flex items-center justify-center gap-2 flex-wrap">
+              <Moon className="animate-pulse" size={20} />
+              <span>RAMADAN 2026</span>
+              <Moon className="animate-pulse" size={20} />
             </h2>
             
-            <div className="text-center mb-4 md:mb-6">
-              <p className="islamic-text text-base md:text-xl text-gold-light mb-2">Time Until {countdown.type}</p>
+            <div className="text-center mb-3 md:mb-4 lg:mb-6">
+              <p className="islamic-text text-sm sm:text-base md:text-lg lg:text-xl text-gold-light mb-2">Time Until {countdown.type}</p>
               <div className="flex justify-center gap-2 md:gap-4 flex-wrap">
                 {[
                   { value: countdown.hours, label: 'HOURS', icon: Clock },
@@ -214,18 +214,18 @@ export default function HomePage() {
 
         <div className="relative bg-gradient-to-br from-mc-darker via-mc-dark-green/20 to-mc-darker rounded-2xl p-4 md:p-8 shadow-2xl border-4 border-gold/30">
           {/* Header */}
-          <div className="text-center mb-6 md:mb-8">
+          <div className="text-center mb-4 md:mb-6 lg:mb-8 px-2">
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="inline-block mb-4"
+              className="inline-block mb-3 md:mb-4"
             >
-              <Moon size={48} className="text-gold mx-auto" />
+              <Moon size={32} className="text-gold mx-auto sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </motion.div>
-            <h2 className="islamic-text text-3xl md:text-4xl lg:text-5xl mb-3 text-gold">
+            <h2 className="islamic-text text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 md:mb-3 text-gold leading-tight">
               Ramadan Prayer Times
             </h2>
-            <p className="text-mc-tan text-sm md:text-base">February 19 - March 20, 2026</p>
+            <p className="text-mc-tan text-xs sm:text-sm md:text-base">February 19 - March 20, 2026</p>
             <div className="flex items-center justify-center gap-2 mt-4">
               <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent to-gold"></div>
               <Star className="text-gold" size={16} />
@@ -366,8 +366,8 @@ export default function HomePage() {
       </motion.div>
 
       {/* The Council - Minecraft Style */}
-      <motion.div variants={itemVariants} className="minecraft-border glow p-6 md:p-8">
-        <h2 className="minecraft-text text-xl md:text-2xl lg:text-3xl text-center mb-6 md:mb-8 flex items-center justify-center gap-2 md:gap-3 text-mc-light-green">
+      <motion.div variants={itemVariants} className="minecraft-border glow p-4 sm:p-6 md:p-8">
+        <h2 className="minecraft-text text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-center mb-4 sm:mb-6 md:mb-8 flex items-center justify-center gap-2 flex-wrap text-mc-light-green">
           <Trophy className="text-gold" size={24} />
           THE LEADERSHIP COUNCIL
           <Trophy className="text-gold" size={24} />

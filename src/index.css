@@ -334,3 +334,69 @@ img {
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .minecraft-text {
+    font-size: clamp(0.5rem, 2vw, 0.75rem);
+    letter-spacing: 1px;
+  }
+  
+  .countdown-digit {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .minecraft-border {
+    border-width: 3px;
+    box-shadow: 
+      inset 3px 3px 0px rgba(107, 159, 127, 0.3),
+      inset -3px -3px 0px rgba(45, 80, 22, 0.5),
+      0 0 20px rgba(74, 124, 89, 0.3),
+      6px 6px 0px rgba(0, 0, 0, 0.6);
+  }
+
+  .islamic-border {
+    border-width: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .minecraft-text {
+    font-size: clamp(0.4rem, 2vw, 0.6rem);
+    letter-spacing: 0.5px;
+  }
+
+  .countdown-digit {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  .minecraft-border {
+    border-width: 2px;
+  }
+}
+
+/* Ensure no horizontal overflow */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Responsive buttons */
+.minecraft-button {
+  font-size: clamp(0.625rem, 2vw, 1rem);
+  padding: clamp(8px, 2vw, 16px) clamp(16px, 4vw, 32px);
+}
