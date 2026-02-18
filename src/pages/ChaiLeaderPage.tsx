@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Coffee, Send, Quote } from 'lucide-react';
 
 const philosophicalQuotes = [
   "The proletariat must rise against the oppression of... wait, what were we talking about? Oh yes, exams.",
@@ -34,55 +36,91 @@ export default function ChaiLeaderPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="container mx-auto px-4 py-8"
+    >
       {/* Header */}
-      <div className="text-center mb-8 minecraft-border p-8 bg-gradient-to-r from-green-900 to-black">
-        <h1 className="minecraft-text text-5xl mb-4 text-lime-400">
-          ☕ CHAI WITH THE LEADER ☕
+      <motion.div 
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring' }}
+        className="text-center mb-8 minecraft-border p-8 bg-gradient-to-r from-mc-dark-green to-mc-darker glow"
+      >
+        <Coffee size={64} className="mx-auto mb-4 text-mc-beige animate-pulse" />
+        <h1 className="minecraft-text text-3xl md:text-5xl mb-4 text-mc-beige">
+          CHAI WITH THE LEADER
         </h1>
-        <p className="text-lime-300 text-xl blink">Ghulam Mustafa: Socialist Marxist Philosopher</p>
-      </div>
+        <p className="text-mc-tan text-lg md:text-xl">Ghulam Mustafa: Socialist Marxist Philosopher</p>
+      </motion.div>
 
       {/* Chai Tap Section */}
-      <div className="minecraft-border bg-black p-8 mb-8">
+      <motion.div 
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="minecraft-border bg-mc-darker p-8 mb-8 glow"
+      >
         <div className="text-center mb-6">
-          <h2 className="text-lime-400 text-3xl mb-4">🫖 VIRTUAL CHAI TAP 🫖</h2>
-          <p className="text-lime-300 mb-4">Tap count: {chaiCount}</p>
-          <button
-            onClick={tapChai}
-            className="minecraft-button text-3xl py-6 px-12 transform hover:scale-110 transition-transform"
+          <h2 className="minecraft-text text-xl md:text-3xl mb-4 text-mc-light-green">VIRTUAL CHAI TAP</h2>
+          <motion.p 
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
+            className="text-mc-tan mb-4"
           >
-            ☕ TAP FOR CHAI ☕
-          </button>
+            Tap count: {chaiCount}
+          </motion.p>
+          <motion.button
+            onClick={tapChai}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
+            className="minecraft-button text-lg md:text-3xl py-6 px-12 flex items-center gap-3 mx-auto"
+          >
+            <Coffee size={32} /> TAP FOR CHAI <Coffee size={32} />
+          </motion.button>
         </div>
         
-        <div className="minecraft-border bg-green-900/30 p-6 mt-6">
-          <p className="text-lime-300 text-lg text-center italic minecraft-text">
+        <motion.div 
+          key={currentQuote}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="minecraft-border bg-mc-green/30 p-6 mt-6 shine"
+        >
+          <Quote className="text-gold mb-2" size={32} />
+          <p className="text-mc-beige text-sm md:text-lg text-center leading-relaxed">
             "{currentQuote}"
           </p>
-          <p className="text-lime-400 text-right mt-4">- The Leader</p>
-        </div>
-      </div>
+          <p className="text-mc-light-green text-right mt-4 italic">- The Leader</p>
+        </motion.div>
+      </motion.div>
 
       {/* Booking Form */}
-      <div className="minecraft-border bg-black p-8">
-        <h2 className="text-lime-400 text-3xl text-center mb-6">📅 BOOK A CHAI SESSION 📅</h2>
+      <motion.div 
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="minecraft-border bg-mc-darker p-8"
+      >
+        <h2 className="minecraft-text text-xl md:text-3xl text-center mb-6 text-mc-light-green flex items-center justify-center gap-3">
+          <Send /> BOOK A CHAI SESSION
+        </h2>
         <form onSubmit={handleBooking} className="max-w-md mx-auto space-y-4">
           <div>
-            <label className="text-lime-400 block mb-2">Your Name:</label>
+            <label className="text-mc-beige block mb-2 text-xs">Your Name:</label>
             <input
               type="text"
               required
-              className="w-full p-3 minecraft-border bg-green-900/30 text-lime-300 focus:outline-none focus:border-lime-400"
+              className="w-full p-3 minecraft-border bg-mc-dark-green/30 text-mc-beige"
               placeholder="Enter your name..."
             />
           </div>
           
           <div>
-            <label className="text-lime-400 block mb-2">Preferred Topic:</label>
+            <label className="text-mc-beige block mb-2 text-xs">Preferred Topic:</label>
             <select
               required
-              className="w-full p-3 minecraft-border bg-green-900/30 text-lime-300 focus:outline-none focus:border-lime-400"
+              className="w-full p-3 minecraft-border bg-mc-dark-green/30 text-mc-beige"
             >
               <option>Marxist Theory</option>
               <option>Exam Survival Strategies</option>
@@ -93,35 +131,44 @@ export default function ChaiLeaderPage() {
           </div>
 
           <div>
-            <label className="text-lime-400 block mb-2">Preferred Date:</label>
+            <label className="text-mc-beige block mb-2 text-xs">Preferred Date:</label>
             <input
               type="date"
               required
-              className="w-full p-3 minecraft-border bg-green-900/30 text-lime-300 focus:outline-none focus:border-lime-400"
+              className="w-full p-3 minecraft-border bg-mc-dark-green/30 text-mc-beige"
             />
           </div>
 
           <div>
-            <label className="text-lime-400 block mb-2">Why do you want chai with the Leader?</label>
+            <label className="text-mc-beige block mb-2 text-xs">Why do you want chai with the Leader?</label>
             <textarea
               required
               rows={4}
-              className="w-full p-3 minecraft-border bg-green-900/30 text-lime-300 focus:outline-none focus:border-lime-400"
+              className="w-full p-3 minecraft-border bg-mc-dark-green/30 text-mc-beige"
               placeholder="Describe your reasons..."
             ></textarea>
           </div>
 
-          <button type="submit" className="minecraft-button w-full py-4 text-xl">
-            📤 SUBMIT REQUEST 📤
-          </button>
+          <motion.button 
+            type="submit" 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="minecraft-button w-full py-4 text-xs md:text-xl flex items-center justify-center gap-2"
+          >
+            <Send size={20} /> SUBMIT REQUEST
+          </motion.button>
         </form>
 
         {bookingStatus && (
-          <div className="minecraft-border bg-red-900/30 p-4 mt-6 text-center">
-            <p className="text-lime-400 blink">{bookingStatus}</p>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="minecraft-border bg-mc-green/30 p-4 mt-6 text-center"
+          >
+            <p className="text-mc-beige text-xs md:text-sm">{bookingStatus}</p>
+          </motion.div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import ChaiLeaderPage from './pages/ChaiLeaderPage';
@@ -19,15 +20,28 @@ function App() {
         </Routes>
         
         {/* Footer */}
-        <footer className="minecraft-border bg-black p-6 mt-12 text-center">
-          <p className="text-lime-400 minecraft-text text-xl mb-2">
-            🎓 TANZEEM-UL-TYARE 🎓
-          </p>
-          <p className="text-lime-300 text-sm">United by Panic | Est. 5th Semester Finals</p>
-          <p className="text-lime-400 text-xs mt-2 blink">
+        <motion.footer 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="minecraft-border bg-mc-darker p-6 mt-12 text-center glow"
+        >
+          <motion.p 
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="text-mc-beige minecraft-text text-lg md:text-xl mb-2"
+          >
+            TANZEEM-UL-TYARE
+          </motion.p>
+          <p className="text-mc-tan text-xs md:text-sm">United by Panic | Est. 5th Semester Finals</p>
+          <motion.p 
+            animate={{ opacity: [1, 0.5, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-mc-light-green text-xs mt-2"
+          >
             "We survived, somehow."
-          </p>
-        </footer>
+          </motion.p>
+        </motion.footer>
       </div>
     </Router>
   );

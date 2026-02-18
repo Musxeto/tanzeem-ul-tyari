@@ -9,35 +9,142 @@
   max-width: 1400px;
 }
 
-/* Retro pixelated effect */
-.pixelated {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+/* Logo styles */
+.logo-glow {
+  filter: drop-shadow(0 0 20px rgba(74, 124, 89, 0.6))
+          drop-shadow(0 0 40px rgba(74, 124, 89, 0.4));
+  transition: all 0.3s ease;
 }
 
-/* Glitch effect for extra chaos */
-@keyframes glitch {
+.logo-glow:hover {
+  filter: drop-shadow(0 0 30px rgba(107, 159, 127, 0.8))
+          drop-shadow(0 0 60px rgba(74, 124, 89, 0.6));
+  transform: scale(1.05);
+}
+
+/* Minecraft block animation */
+@keyframes block-float {
+  0%, 100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotateY(90deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateY(180deg);
+  }
+  75% {
+    transform: translateY(-10px) rotateY(270deg);
+  }
+}
+
+.block-float {
+  animation: block-float 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--mc-beige) 0%, var(--gold) 50%, var(--mc-light-green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Islamic pattern overlay */
+.islamic-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.islamic-pattern::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%),
+    radial-gradient(circle at 80% 50%, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Shine effect */
+@keyframes shine {
   0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    transform: translate(2px, 2px);
-  }
-  80% {
-    transform: translate(2px, -2px);
+    left: -100%;
   }
   100% {
-    transform: translate(0);
+    left: 200%;
   }
 }
 
-.glitch:hover {
-  animation: glitch 0.3s infinite;
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine 3s infinite;
+}
+
+/* Countdown number styling */
+.countdown-digit {
+  font-size: 4rem;
+  font-weight: bold;
+  background: linear-gradient(180deg, var(--mc-light-green), var(--mc-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Star particles */
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.star {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+/* Responsive text scaling */
+@media (max-width: 768px) {
+  .minecraft-text {
+    font-size: 0.6rem;
+  }
+  
+  .countdown-digit {
+    font-size: 2rem;
+  }
 }
