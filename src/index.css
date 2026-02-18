@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Amiri:wght@400;700&display=swap');
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Amiri:wght@400;700&display=swap');
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
 
 * {
   margin: 0;
@@ -39,21 +44,17 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
+  background-image:
+    repeating-linear-gradient(0deg,
       transparent,
       transparent 2px,
       rgba(74, 124, 89, 0.02) 2px,
-      rgba(74, 124, 89, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      rgba(74, 124, 89, 0.02) 4px),
+    repeating-linear-gradient(90deg,
       transparent,
       transparent 2px,
       rgba(74, 124, 89, 0.02) 2px,
-      rgba(74, 124, 89, 0.02) 4px
-    );
+      rgba(74, 124, 89, 0.02) 4px);
   pointer-events: none;
   z-index: 1;
 }
@@ -66,7 +67,7 @@ body::before {
 /* Minecraft Pixelated Text */
 .minecraft-text {
   font-family: 'Press Start 2P', cursive;
-  text-shadow: 
+  text-shadow:
     3px 3px 0px rgba(45, 80, 22, 0.8),
     6px 6px 0px rgba(0, 0, 0, 0.5);
   letter-spacing: 2px;
@@ -83,7 +84,7 @@ body::before {
 /* Minecraft Block Border */
 .minecraft-border {
   border: 4px solid var(--mc-dark-green);
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 0px rgba(107, 159, 127, 0.3),
     inset -4px -4px 0px rgba(45, 80, 22, 0.5),
     0 0 30px rgba(74, 124, 89, 0.3),
@@ -99,10 +100,10 @@ body::before {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--mc-light-green) 50%, 
-    transparent 100%);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--mc-light-green) 50%,
+      transparent 100%);
   opacity: 0.6;
 }
 
@@ -117,7 +118,7 @@ body::before {
   cursor: pointer;
   transition: all 0.15s;
   padding: 16px 32px;
-  box-shadow: 
+  box-shadow:
     inset 3px 3px 0px rgba(255, 255, 255, 0.2),
     inset -3px -3px 0px rgba(0, 0, 0, 0.4),
     6px 6px 0px rgba(0, 0, 0, 0.6),
@@ -144,7 +145,7 @@ body::before {
 .minecraft-button:hover {
   background: linear-gradient(180deg, #7fbd9b 0%, var(--mc-light-green) 50%, var(--mc-green) 100%);
   transform: translateY(-4px);
-  box-shadow: 
+  box-shadow:
     inset 3px 3px 0px rgba(255, 255, 255, 0.3),
     inset -3px -3px 0px rgba(0, 0, 0, 0.5),
     8px 8px 0px rgba(0, 0, 0, 0.6),
@@ -153,7 +154,7 @@ body::before {
 
 .minecraft-button:active {
   transform: translateY(2px);
-  box-shadow: 
+  box-shadow:
     inset 3px 3px 0px rgba(0, 0, 0, 0.5),
     inset -3px -3px 0px rgba(255, 255, 255, 0.1),
     3px 3px 0px rgba(0, 0, 0, 0.6);
@@ -200,7 +201,7 @@ body::before {
 /* Gold Border for Islamic sections */
 .islamic-border {
   border: 3px solid var(--gold);
-  box-shadow: 
+  box-shadow:
     inset 0 0 20px rgba(212, 175, 55, 0.2),
     0 0 40px rgba(212, 175, 55, 0.3),
     0 8px 16px rgba(0, 0, 0, 0.5);
@@ -215,12 +216,12 @@ body::before {
   left: -3px;
   right: -3px;
   bottom: -3px;
-  background: linear-gradient(45deg, 
-    var(--gold) 0%, 
-    var(--gold-light) 25%, 
-    var(--gold) 50%, 
-    var(--gold-light) 75%, 
-    var(--gold) 100%);
+  background: linear-gradient(45deg,
+      var(--gold) 0%,
+      var(--gold-light) 25%,
+      var(--gold) 50%,
+      var(--gold-light) 75%,
+      var(--gold) 100%);
   z-index: -1;
   opacity: 0.5;
   animation: shimmer 3s linear infinite;
@@ -228,9 +229,17 @@ body::before {
 }
 
 @keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Particle effect container */
@@ -246,8 +255,15 @@ body::before {
 
 /* Floating Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .float {
@@ -256,8 +272,17 @@ body::before {
 
 /* Pulse Animation */
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 }
 
 .pulse {
@@ -266,8 +291,15 @@ body::before {
 
 /* Glow Animation */
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(74, 124, 89, 0.4); }
-  50% { box-shadow: 0 0 40px rgba(74, 124, 89, 0.8), 0 0 60px rgba(107, 159, 127, 0.6); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(74, 124, 89, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(74, 124, 89, 0.8), 0 0 60px rgba(107, 159, 127, 0.6);
+  }
 }
 
 .glow {
@@ -303,7 +335,9 @@ table {
 }
 
 /* Input Fields */
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
   background: rgba(26, 26, 26, 0.8);
@@ -312,10 +346,12 @@ input, select, textarea {
   box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--mc-light-green);
-  box-shadow: 
+  box-shadow:
     inset 2px 2px 4px rgba(0, 0, 0, 0.5),
     0 0 20px rgba(74, 124, 89, 0.5);
 }
@@ -337,11 +373,6 @@ img {
 
 /* Responsive Utilities */
 @media (max-width: 768px) {
-  .minecraft-text {
-    font-size: clamp(0.5rem, 2vw, 0.75rem);
-    letter-spacing: 1px;
-  }
-  
   .countdown-digit {
     font-size: clamp(2rem, 6vw, 3rem);
   }
@@ -352,7 +383,7 @@ img {
 
   .minecraft-border {
     border-width: 3px;
-    box-shadow: 
+    box-shadow:
       inset 3px 3px 0px rgba(107, 159, 127, 0.3),
       inset -3px -3px 0px rgba(45, 80, 22, 0.5),
       0 0 20px rgba(74, 124, 89, 0.3),
@@ -365,11 +396,6 @@ img {
 }
 
 @media (max-width: 480px) {
-  .minecraft-text {
-    font-size: clamp(0.4rem, 2vw, 0.6rem);
-    letter-spacing: 0.5px;
-  }
-
   .countdown-digit {
     font-size: clamp(1.5rem, 5vw, 2rem);
   }
@@ -384,7 +410,8 @@ img {
 }
 
 /* Ensure no horizontal overflow */
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
   position: relative;

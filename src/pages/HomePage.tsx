@@ -5,10 +5,8 @@ import { Clock, Moon, Sun, Star, Trophy } from 'lucide-react';
 
 export default function HomePage() {
   const [countdown, setCountdown] = useState({ type: '', hours: 0, minutes: 0, seconds: 0 });
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const timer = setInterval(() => {
       const now = new Date();
       const today = ramadanTimings[0]; // Use first day for demo
@@ -70,11 +68,11 @@ export default function HomePage() {
     <motion.div
       variants={containerVariants}
       initial="hidden"
-      animate={mounted ? "visible" : "hidden"}
-      className="container mx-auto px-4 py-8"
+      animate="visible"
+      className="container mx-auto px-4 py-4 sm:py-8"
     >
       {/* Hero Section with Logo */}
-      <motion.div variants={itemVariants} className="text-center mb-8 md:mb-12 relative px-2">
+      <motion.div variants={itemVariants} className="text-center mb-6 md:mb-12 relative px-2">
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -143,7 +141,7 @@ export default function HomePage() {
       </motion.div>
 
       {/* Islamic-styled Ramadan Countdown */}
-      <motion.div variants={itemVariants} className="mb-12">
+      <motion.div variants={itemVariants} className="mb-8 md:mb-12">
         <div className="islamic-border islamic-pattern p-6 md:p-8 relative overflow-hidden">
           {/* Decorative corners */}
           <div className="absolute top-2 left-2 md:top-4 md:left-4 w-6 h-6 md:w-8 md:h-8 border-t-4 border-l-4 border-gold"></div>
@@ -155,10 +153,10 @@ export default function HomePage() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <h2 className="islamic-text text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-6 text-center text-gold flex items-center justify-center gap-2 flex-wrap">
-              <Moon className="animate-pulse" size={20} />
+            <h2 className="islamic-text text-lg sm:text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-6 text-center text-gold flex items-center justify-center gap-2 flex-wrap">
+              <Moon className="animate-pulse w-4 h-4 sm:w-5 sm:h-5" />
               <span>RAMADAN 2026</span>
-              <Moon className="animate-pulse" size={20} />
+              <Moon className="animate-pulse w-4 h-4 sm:w-5 sm:h-5" />
             </h2>
 
             <div className="text-center mb-3 md:mb-4 lg:mb-6">
@@ -174,18 +172,18 @@ export default function HomePage() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5 + idx * 0.1 }}
-                    className="minecraft-border bg-gradient-to-b from-mc-green to-mc-dark-green p-3 md:p-6 min-w-[90px] md:min-w-[120px]"
+                    className="minecraft-border bg-gradient-to-b from-mc-green to-mc-dark-green p-2 sm:p-3 md:p-6 min-w-[70px] sm:min-w-[90px] md:min-w-[120px]"
                   >
-                    <item.icon className="mx-auto mb-1 md:mb-2 text-gold" size={20} />
+                    <item.icon className="mx-auto mb-1 md:mb-2 text-gold w-4 h-4 sm:w-5 sm:h-5" />
                     <motion.div
-                      className="text-3xl md:text-5xl text-mc-beige minecraft-text"
+                      className="text-xl sm:text-3xl md:text-5xl text-mc-beige minecraft-text"
                       key={item.value}
                       initial={{ y: -20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                     >
                       {String(item.value).padStart(2, '0')}
                     </motion.div>
-                    <div className="islamic-text text-mc-beige text-[8px] md:text-xs mt-1 md:mt-2">{item.label}</div>
+                    <div className="islamic-text text-mc-beige text-[8px] sm:text-[10px] md:text-xs mt-1 md:mt-2">{item.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -222,7 +220,7 @@ export default function HomePage() {
             >
               <Moon size={32} className="text-gold mx-auto sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </motion.div>
-            <h2 className="islamic-text text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 md:mb-3 text-gold leading-tight">
+            <h2 className="islamic-text text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 md:mb-3 text-gold leading-tight">
               Ramadan Prayer Times
             </h2>
             <p className="text-mc-tan text-xs sm:text-sm md:text-base">February 19 - March 20, 2026</p>
@@ -372,7 +370,7 @@ export default function HomePage() {
           THE LEADERSHIP COUNCIL
           <Trophy className="text-gold" size={24} />
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             { name: 'Ghulam Mustafa', title: 'Leader & Founder', persona: 'Socialist Marxist Philosopher', icon: '👑' },
             { name: 'Mudassar Bhatti', title: 'The Big Dawg', persona: 'Masculine ex-leader; Red-pilled energy', icon: '💪' },
@@ -394,6 +392,6 @@ export default function HomePage() {
           ))}
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div >
   );
 }

@@ -13,7 +13,7 @@ export default function Navigation() {
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className="minecraft-border bg-black/90 backdrop-blur-md p-2 sm:p-3 md:p-4 mb-4 md:mb-6 sticky top-0 z-50"
@@ -23,7 +23,7 @@ export default function Navigation() {
           {navItems.map((item, idx) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.to;
-            
+
             return (
               <motion.div
                 key={item.to}
@@ -33,19 +33,19 @@ export default function Navigation() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link 
-                  to={item.to} 
-                  className={`nav-link flex items-center gap-2 ${isActive ? 'bg-mc-green border-mc-light-green' : ''}`}
+                <Link
+                  to={item.to}
+                  className={`nav-link flex items-center justify-center gap-2 ${isActive ? 'bg-mc-green border-mc-light-green' : ''} text-[8px] sm:text-[10px] px-2 py-2 sm:px-4 sm:py-3`}
                 >
-                  <Icon size={16} />
-                  <span className="hidden sm:inline">{item.label}</span>
+                  <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="inline sm:inline">{item.label}</span>
                 </Link>
               </motion.div>
             );
           })}
         </div>
-        
-        <motion.div 
+
+        <motion.div
           className="text-center mt-2 md:mt-4"
           animate={{ opacity: [1, 0.7, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
