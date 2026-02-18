@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { ramadanTimings } from '../data/ramadanTimings';
-import { Clock, Moon, Sun, Star, Users, Trophy } from 'lucide-react';
+import { Clock, Moon, Sun, Star, Trophy } from 'lucide-react';
 
 export default function HomePage() {
   const [countdown, setCountdown] = useState({ type: '', hours: 0, minutes: 0, seconds: 0 });
@@ -12,13 +12,13 @@ export default function HomePage() {
     const timer = setInterval(() => {
       const now = new Date();
       const today = ramadanTimings[0]; // Use first day for demo
-      
+
       const [sehrHour, sehrMin] = today.sehr.split(':').map(Number);
       const [iftarHour, iftarMin] = today.iftar.split(':').map(Number);
-      
+
       const sehrTime = new Date(now);
       sehrTime.setHours(sehrHour, sehrMin, 0, 0);
-      
+
       const iftarTime = new Date(now);
       iftarTime.setHours(iftarHour, iftarMin, 0, 0);
 
@@ -40,14 +40,14 @@ export default function HomePage() {
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      
+
       setCountdown({ type, hours, minutes, seconds });
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -57,7 +57,7 @@ export default function HomePage() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
@@ -67,7 +67,7 @@ export default function HomePage() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={containerVariants}
       initial="hidden"
       animate={mounted ? "visible" : "hidden"}
@@ -82,22 +82,22 @@ export default function HomePage() {
           className="relative inline-block mb-4 md:mb-6"
         >
           <motion.div
-            animate={{ 
+            animate={{
               rotateY: [0, 360],
             }}
             transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
             className="logo-glow"
           >
-            <img 
-              src="/logo-light.png" 
-              alt="Tanzeem-ul-TyarI Logo" 
+            <img
+              src="/logo-light.png"
+              alt="Tanzeem-ul-TyarI Logo"
               className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
             />
           </motion.div>
-          
+
           {/* Floating particles around logo */}
           {[...Array(8)].map((_, i) => (
             <motion.div
@@ -122,19 +122,19 @@ export default function HomePage() {
           ))}
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={itemVariants}
           className="minecraft-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-3 md:mb-4 gradient-text px-2 leading-tight"
         >
           TANZEEM-UL-TYARI
         </motion.h1>
-        <motion.p 
+        <motion.p
           variants={itemVariants}
           className="text-mc-tan text-base sm:text-lg md:text-xl lg:text-2xl mb-2"
         >
           🎓 FINAL EXAMS 🎓
         </motion.p>
-        <motion.p 
+        <motion.p
           variants={itemVariants}
           className="text-mc-beige text-sm sm:text-base md:text-lg italic px-4"
         >
@@ -160,7 +160,7 @@ export default function HomePage() {
               <span>RAMADAN 2026</span>
               <Moon className="animate-pulse" size={20} />
             </h2>
-            
+
             <div className="text-center mb-3 md:mb-4 lg:mb-6">
               <p className="islamic-text text-sm sm:text-base md:text-lg lg:text-xl text-gold-light mb-2">Time Until {countdown.type}</p>
               <div className="flex justify-center gap-2 md:gap-4 flex-wrap">
@@ -177,7 +177,7 @@ export default function HomePage() {
                     className="minecraft-border bg-gradient-to-b from-mc-green to-mc-dark-green p-3 md:p-6 min-w-[90px] md:min-w-[120px]"
                   >
                     <item.icon className="mx-auto mb-1 md:mb-2 text-gold" size={20} />
-                    <motion.div 
+                    <motion.div
                       className="text-3xl md:text-5xl text-mc-beige minecraft-text"
                       key={item.value}
                       initial={{ y: -20, opacity: 0 }}
@@ -195,8 +195,8 @@ export default function HomePage() {
       </motion.div>
 
       {/* Ramadan Timetable - Modern Islamic Design */}
-      <motion.div 
-        variants={itemVariants} 
+      <motion.div
+        variants={itemVariants}
         className="mb-12 relative"
       >
         {/* Background Islamic Pattern */}
@@ -204,11 +204,11 @@ export default function HomePage() {
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="islamic-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="1"/>
+                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="2" />
+                <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="1" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#islamic-pattern)" className="text-gold"/>
+            <rect width="100%" height="100%" fill="url(#islamic-pattern)" className="text-gold" />
           </svg>
         </div>
 
