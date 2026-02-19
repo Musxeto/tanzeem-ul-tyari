@@ -3,16 +3,41 @@ import { motion, type Variants } from 'framer-motion';
 import { ramadanTimings } from '../data/ramadanTimings';
 import { Clock, Moon, Sun, Star, Trophy } from 'lucide-react';
 
+// Helper to parse date string like "19 Feb" or "01 Mar" into a Date object for year 2026
+function parseRamadanDate(dateStr: string): Date {
+  const months: Record<string, number> = { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3 };
+  const parts = dateStr.trim().split(' ');
+  const day = parseInt(parts[0], 10);
+  const month = months[parts[1]] ?? 1;
+  return new Date(2026, month, day);
+}
+
+// Find today's Ramadan day index based on current date
+function getTodayIndex(): number {
+  const now = new Date();
+  const todayMonth = now.getMonth(); // 0-indexed
+  for (let i = 0; i < ramadanTimings.length; i++) {
+    const d = parseRamadanDate(ramadanTimings[i].date);
+    if (d.getDate() === now.getDate() && d.getMonth() === todayMonth) {
+      return i;
+    }
+  }
+  return 0; // fallback to first day
+}
+
 export default function HomePage() {
   const [countdown, setCountdown] = useState({ type: '', hours: 0, minutes: 0, seconds: 0 });
+  const todayIndex = getTodayIndex();
 
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
-      const today = ramadanTimings[0]; // Use first day for demo
+      const today = ramadanTimings[todayIndex];
 
       const [sehrHour, sehrMin] = today.sehr.split(':').map(Number);
-      const [iftarHour, iftarMin] = today.iftar.split(':').map(Number);
+      const [iftarHourRaw, iftarMin] = today.iftar.split(':').map(Number);
+      // Iftar is always PM, so add 12 to convert from 12hr to 24hr format
+      const iftarHour = iftarHourRaw + 12;
 
       const sehrTime = new Date(now);
       sehrTime.setHours(sehrHour, sehrMin, 0, 0);
@@ -28,9 +53,13 @@ export default function HomePage() {
         target = iftarTime;
         type = 'IFTAR';
       } else {
+        // After iftar, count down to next day's sehri
+        const nextIdx = Math.min(todayIndex + 1, ramadanTimings.length - 1);
+        const nextDay = ramadanTimings[nextIdx];
+        const [nextSehrHour, nextSehrMin] = nextDay.sehr.split(':').map(Number);
         target = new Date(now);
         target.setDate(target.getDate() + 1);
-        target.setHours(sehrHour, sehrMin, 0, 0);
+        target.setHours(nextSehrHour, nextSehrMin, 0, 0);
         type = 'SEHRI';
       }
 
@@ -43,7 +72,7 @@ export default function HomePage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [todayIndex]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -266,94 +295,122 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {ramadanTimings.map((day, idx) => (
-                  <motion.tr
-                    key={day.day}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.02 }}
-                    whileHover={{ backgroundColor: 'rgba(74, 124, 89, 0.1)' }}
-                    className="border-b border-gold/10 transition-colors"
-                  >
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center border border-gold/30">
-                          <span className="islamic-text text-gold font-bold">{day.day}</span>
+                {ramadanTimings.map((day, idx) => {
+                  const isToday = idx === todayIndex;
+                  return (
+                    <motion.tr
+                      key={day.day}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.02 }}
+                      whileHover={{ backgroundColor: 'rgba(74, 124, 89, 0.1)' }}
+                      className={`border-b border-gold/10 transition-colors ${isToday ? 'bg-gold/10 ring-2 ring-gold/50 ring-inset shadow-[0_0_20px_rgba(212,175,55,0.15)]' : ''
+                        }`}
+                    >
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${isToday
+                            ? 'bg-gradient-to-br from-gold/50 to-gold/20 border-gold shadow-[0_0_12px_rgba(212,175,55,0.4)]'
+                            : 'bg-gradient-to-br from-gold/20 to-gold/5 border-gold/30'
+                            }`}>
+                            <span className="islamic-text text-gold font-bold">{day.day}</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className={`font-semibold ${isToday ? 'text-gold' : 'text-mc-beige'}`}>{day.dayName}</span>
+                            {isToday && <span className="text-gold text-xs font-bold animate-pulse">📍 TODAY</span>}
+                          </div>
                         </div>
-                        <span className="text-mc-beige font-semibold">{day.dayName}</span>
-                      </div>
-                    </td>
-                    <td className="p-4 islamic-text text-mc-tan">{day.date}</td>
-                    <td className="p-4 text-center">
-                      <div className="inline-flex items-center gap-2 bg-mc-green/20 px-4 py-2 rounded-lg border border-gold/20">
-                        <Sun size={16} className="text-gold-light" />
-                        <span className="islamic-text text-mc-beige text-lg">{day.sehr}</span>
-                      </div>
-                    </td>
-                    <td className="p-4 text-center">
-                      <div className="inline-flex items-center gap-2 bg-mc-dark-green/30 px-4 py-2 rounded-lg border border-gold/20">
-                        <Moon size={16} className="text-gold-light" />
-                        <span className="islamic-text text-mc-beige text-lg">{day.iftar}</span>
-                      </div>
-                    </td>
-                    <td className="p-4 text-center text-mc-tan text-sm">{day.duration}</td>
-                  </motion.tr>
-                ))}
+                      </td>
+                      <td className={`p-4 islamic-text ${isToday ? 'text-gold font-bold' : 'text-mc-tan'}`}>{day.date}</td>
+                      <td className="p-4 text-center">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border ${isToday ? 'bg-mc-green/30 border-gold/40' : 'bg-mc-green/20 border-gold/20'
+                          }`}>
+                          <Sun size={16} className="text-gold-light" />
+                          <span className={`islamic-text text-lg ${isToday ? 'text-gold font-bold' : 'text-mc-beige'}`}>{day.sehr}</span>
+                        </div>
+                      </td>
+                      <td className="p-4 text-center">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border ${isToday ? 'bg-mc-dark-green/50 border-gold/40' : 'bg-mc-dark-green/30 border-gold/20'
+                          }`}>
+                          <Moon size={16} className="text-gold-light" />
+                          <span className={`islamic-text text-lg ${isToday ? 'text-gold font-bold' : 'text-mc-beige'}`}>{day.iftar}</span>
+                        </div>
+                      </td>
+                      <td className={`p-4 text-center text-sm ${isToday ? 'text-gold font-bold' : 'text-mc-tan'}`}>{day.duration}</td>
+                    </motion.tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
           {/* Mobile Card View */}
           <div className="lg:hidden space-y-4">
-            {ramadanTimings.map((day, idx) => (
-              <motion.div
-                key={day.day}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
-                className="bg-gradient-to-br from-mc-dark-green/30 to-mc-darker/50 rounded-xl p-4 border-2 border-gold/20 shadow-lg"
-              >
-                {/* Day Header */}
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-gold/20">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold/30 to-gold/10 flex items-center justify-center border-2 border-gold/40">
-                      <span className="islamic-text text-gold text-lg font-bold">{day.day}</span>
+            {ramadanTimings.map((day, idx) => {
+              const isToday = idx === todayIndex;
+              return (
+                <motion.div
+                  key={day.day}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05 }}
+                  className={`bg-gradient-to-br rounded-xl p-4 border-2 shadow-lg ${isToday
+                    ? 'from-gold/20 to-mc-darker/50 border-gold/60 shadow-[0_0_25px_rgba(212,175,55,0.25)] ring-2 ring-gold/40'
+                    : 'from-mc-dark-green/30 to-mc-darker/50 border-gold/20'
+                    }`}
+                >
+                  {/* Day Header */}
+                  <div className={`flex items-center justify-between mb-4 pb-3 border-b ${isToday ? 'border-gold/40' : 'border-gold/20'
+                    }`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 ${isToday
+                        ? 'bg-gradient-to-br from-gold/50 to-gold/20 border-gold shadow-[0_0_12px_rgba(212,175,55,0.4)]'
+                        : 'bg-gradient-to-br from-gold/30 to-gold/10 border-gold/40'
+                        }`}>
+                        <span className="islamic-text text-gold text-lg font-bold">{day.day}</span>
+                      </div>
+                      <div>
+                        <p className={`font-bold text-lg ${isToday ? 'text-gold' : 'text-mc-beige'}`}>{day.dayName}</p>
+                        <p className={`text-sm islamic-text ${isToday ? 'text-gold font-bold' : 'text-mc-tan'}`}>{day.date}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-mc-beige font-bold text-lg">{day.dayName}</p>
-                      <p className="text-mc-tan text-sm islamic-text">{day.date}</p>
+                    <div className="flex flex-col items-center gap-1">
+                      {isToday && <span className="text-gold text-xs font-bold animate-pulse">📍 TODAY</span>}
+                      <Star className="text-gold" size={20} />
                     </div>
                   </div>
-                  <Star className="text-gold" size={20} />
-                </div>
 
-                {/* Prayer Times */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-mc-green/20 rounded-lg p-3 border border-gold/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Sun size={18} className="text-gold-light" />
-                      <span className="text-mc-tan text-xs uppercase">Sehri</span>
+                  {/* Prayer Times */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className={`rounded-lg p-3 border ${isToday ? 'bg-mc-green/30 border-gold/40' : 'bg-mc-green/20 border-gold/20'
+                      }`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Sun size={18} className="text-gold-light" />
+                        <span className="text-mc-tan text-xs uppercase">Sehri</span>
+                      </div>
+                      <p className={`islamic-text text-2xl font-bold ${isToday ? 'text-gold' : 'text-mc-beige'}`}>{day.sehr}</p>
                     </div>
-                    <p className="islamic-text text-mc-beige text-2xl font-bold">{day.sehr}</p>
-                  </div>
-                  <div className="bg-mc-dark-green/30 rounded-lg p-3 border border-gold/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Moon size={18} className="text-gold-light" />
-                      <span className="text-mc-tan text-xs uppercase">Iftar</span>
+                    <div className={`rounded-lg p-3 border ${isToday ? 'bg-mc-dark-green/50 border-gold/40' : 'bg-mc-dark-green/30 border-gold/20'
+                      }`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Moon size={18} className="text-gold-light" />
+                        <span className="text-mc-tan text-xs uppercase">Iftar</span>
+                      </div>
+                      <p className={`islamic-text text-2xl font-bold ${isToday ? 'text-gold' : 'text-mc-beige'}`}>{day.iftar}</p>
                     </div>
-                    <p className="islamic-text text-mc-beige text-2xl font-bold">{day.iftar}</p>
                   </div>
-                </div>
 
-                {/* Duration */}
-                <div className="mt-3 flex items-center justify-center gap-2 text-mc-tan text-sm">
-                  <Clock size={14} />
-                  <span>{day.duration}</span>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Duration */}
+                  <div className={`mt-3 flex items-center justify-center gap-2 text-sm ${isToday ? 'text-gold font-bold' : 'text-mc-tan'
+                    }`}>
+                    <Clock size={14} />
+                    <span>{day.duration}</span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Bottom Decoration */}
