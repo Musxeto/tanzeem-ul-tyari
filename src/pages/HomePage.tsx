@@ -28,6 +28,9 @@ function getTodayIndex(): number {
 export default function HomePage() {
   const [countdown, setCountdown] = useState({ type: '', hours: 0, minutes: 0, seconds: 0 });
   const todayIndex = getTodayIndex();
+  
+  // Filter to show only today and future dates
+  const activeTimings = ramadanTimings.filter((_, idx) => idx >= todayIndex);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -295,8 +298,8 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {ramadanTimings.map((day, idx) => {
-                  const isToday = idx === todayIndex;
+                {activeTimings.map((day, idx) => {
+                  const isToday = idx === 0;
                   return (
                     <motion.tr
                       key={day.day}
@@ -347,8 +350,8 @@ export default function HomePage() {
 
           {/* Mobile Card View */}
           <div className="lg:hidden space-y-4">
-            {ramadanTimings.map((day, idx) => {
-              const isToday = idx === todayIndex;
+            {activeTimings.map((day, idx) => {
+              const isToday = idx === 0;
               return (
                 <motion.div
                   key={day.day}
