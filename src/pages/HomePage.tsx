@@ -5,23 +5,19 @@ import { Clock, Moon, Sun, Star, Trophy } from 'lucide-react';
 import { useRamadanState } from '../hooks/useRamadanState';
 import SehriIftarOverlay from '../components/SehriIftarOverlay';
 import MotivationalBubbles from '../components/MotivationalBubbles';
+import BigCountdownOverlay from '../components/BigCountdownOverlay';
 
 export default function HomePage() {
   const { todayIndex, countdown, isSehriActive, isIftarActive } = useRamadanState();
   const [overlayDismissed, setOverlayDismissed] = useState(false);
 
-  // Filter to show only today and future dates
   const activeTimings = ramadanTimings.filter((_, idx) => idx >= todayIndex);
 
-  // Show overlay if sehri/iftar is active and not dismissed
   const showOverlay = (isSehriActive || isIftarActive) && !overlayDismissed;
   const overlayType = isSehriActive ? 'sehri' : 'iftar';
 
-  // Reset dismiss when active mode ends
   const isAnyActive = isSehriActive || isIftarActive;
-  // If neither is active but was dismissed, reset for next time
   if (!isAnyActive && overlayDismissed) {
-    // Use a timeout to avoid setState during render
     setTimeout(() => setOverlayDismissed(false), 0);
   }
 
@@ -55,6 +51,12 @@ export default function HomePage() {
           />
         )}
       </AnimatePresence>
+
+      {/* Big 10-Second Countdown Overlay */}
+      <BigCountdownOverlay
+        seconds={countdown.hours === 0 && countdown.minutes === 0 ? countdown.seconds : 0}
+        type={countdown.type as 'SEHRI' | 'IFTAR'}
+      />
 
       {/* Motivational Bubbles */}
       <MotivationalBubbles
