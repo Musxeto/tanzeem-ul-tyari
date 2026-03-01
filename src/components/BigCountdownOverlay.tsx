@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface BigCountdownOverlayProps {
@@ -6,7 +7,26 @@ interface BigCountdownOverlayProps {
 }
 
 export default function BigCountdownOverlay({ seconds, type }: BigCountdownOverlayProps) {
-    if (seconds <= 0 || seconds > 10) return null;
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    // Play timer.mp3 when overlay first appears, stop when it disappears
+    useEffect(() => {
+        try {
+            audioRef.current = new Audio('/timer.mp3');
+            audioRef.current.play().catch(() => { });
+        } catch { /* no audio */ }
+
+        return () => {
+            audioRef.current?.pause();
+            audioRef.current = null;
+        };
+    }, []); // empty deps — play on mount, stop on unmount
+
+    if (seconds <= 0 || seconds > 10) {
+        // Stop audio when overlay hides
+        audioRef.current?.pause();
+        return null;
+    }
 
     const isCritical = seconds <= 3;
 
