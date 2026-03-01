@@ -48,7 +48,7 @@ export default function MotivationalBubbles({ totalMinutesLeft, countdownType }:
             id: ++bubbleIdCounter,
             message: msg,
             x: side === 'left' ? (2 + Math.random() * 8) : (2 + Math.random() * 8),
-            y: 5 + Math.random() * 60, // 5% - 65% from bottom
+            y: 3 + Math.random() * 35, // 3% - 38% from bottom (lower half only, avoids timer)
             size: sizes[Math.floor(Math.random() * sizes.length)],
             side,
         };

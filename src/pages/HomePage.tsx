@@ -169,11 +169,12 @@ export default function HomePage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.5 + idx * 0.1 }}
-                      className="minecraft-border bg-gradient-to-b from-mc-green to-mc-dark-green p-2 sm:p-3 md:p-6 min-w-[70px] sm:min-w-[90px] md:min-w-[120px]"
+                      className="minecraft-border bg-gradient-to-b from-mc-green to-mc-dark-green p-3 sm:p-4 md:p-6 min-w-[85px] sm:min-w-[100px] md:min-w-[130px]"
                     >
                       <item.icon className="mx-auto mb-1 md:mb-2 text-gold w-4 h-4 sm:w-5 sm:h-5" />
                       <motion.div
-                        className="text-xl sm:text-3xl md:text-5xl text-mc-beige minecraft-text"
+                        className="text-mc-beige minecraft-text"
+                        style={{ fontSize: 'clamp(2rem, 7vw, 3.5rem)' }}
                         key={item.value}
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -229,7 +230,7 @@ export default function HomePage() {
             </div>
 
             {/* Modern Card Grid for Mobile, Table for Desktop */}
-            <div className="hidden lg:block overflow-x-auto">
+            <div className="hidden lg:block overflow-x-auto w-full">
               <table className="w-full">
                 <thead>
                   <tr className="border-b-2 border-gold/30">

@@ -98,7 +98,7 @@ export const motivationalMessages = {
         "😋 Your stomach is sending notifications...",
     ],
 
-    // 0-30 minutes remaining — RAPID FIRE (40+ messages)
+    // 0-30 minutes remaining — rapid fire
     finalCountdown: [
         "🚨 30 MINUTES! THIS IS NOT A DRILL!",
         "⏰ Lock in bro, just minutes left!",
@@ -149,6 +149,7 @@ export const motivationalMessages = {
         "😋 The countdown is in SECONDS now!",
         "🚀 3... 2... 1... almost... NOT YET!",
         "💪 HELD. THE. LINE. Like a champion!",
+        "🌙 Any second now... ANY SECOND...",
         "🎉 GET READY TO EAT LIKE A KING! 👑",
     ],
 };
@@ -162,13 +163,12 @@ export function getMessageBracket(minutesLeft: number): string[] {
     return motivationalMessages.finalCountdown;
 }
 
-// Get spawn interval in ms based on minutes remaining
 export function getBubbleInterval(minutesLeft: number): number {
-    if (minutesLeft > 600) return 45000;   // every 45s
-    if (minutesLeft > 300) return 30000;   // every 30s
-    if (minutesLeft > 60) return 15000;    // every 15s
-    if (minutesLeft > 30) return 8000;     // every 8s
-    if (minutesLeft > 10) return 4000;     // every 4s
-    if (minutesLeft > 5) return 2500;      // every 2.5s
-    return 1500;                            // every 1.5s in last 5 min
+    if (minutesLeft > 600) return 60000;
+    if (minutesLeft > 300) return 45000;
+    if (minutesLeft > 60) return 30000;
+    if (minutesLeft > 30) return 15000;
+    if (minutesLeft > 10) return 10000;
+    if (minutesLeft > 5) return 8000;
+    return 6000;
 }
